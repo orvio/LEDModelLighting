@@ -93,49 +93,8 @@ LEDLightingCycle::LEDLightingCycle(unsigned char const ledPin, unsigned char con
                                    unsigned long const onTimeMs, unsigned long const offTimeMs,
                                    LEDCyclicEffect * const onEffect,
                                    LEDOneShotEffect * const offToOnEffect, LEDOneShotEffect * const onToOffEffect):
-  LEDStaticLighting(ledPin, brightness, CYCLE_OFF, onEffect, offToOnEffect, onToOffEffect),
-  _onTimeMs(onTimeMs),
-  _offTimeMs(offTimeMs),
-  _timeOfNextSwitchMs(0)
+  LEDRandomLightingCycle(ledPin, brightness, onTimeMs, onTimeMs, offTimeMs, offTimeMs, onEffect, offToOnEffect, onToOffEffect)
 {}
-
-void LEDLightingCycle::execute() {
-  unsigned long currentTime = millis();
-
-  //where are we in our cycle?
-  switch (_currentState) {
-    case CYCLE_OFF:
-      lightOff();
-      if (currentTime > _timeOfNextSwitchMs) {
-        //time has elaped -> switch to on and reset timer
-        _currentState = CYCLE_OFF_TO_ON;
-        resetTransitions();
-        _timeOfNextSwitchMs = currentTime + _onTimeMs;
-      }
-      break;
-    case CYCLE_OFF_TO_ON:
-      if ( lightOffToOn() ) {
-        _currentState = CYCLE_ON;
-      }
-      break;
-    case CYCLE_ON:
-      lightOn();
-      if (currentTime > _timeOfNextSwitchMs) {
-        //time has elaped -> switch to off and reset timer
-        _currentState = CYCLE_ON_TO_OFF;
-        resetTransitions();
-        _timeOfNextSwitchMs = currentTime + _offTimeMs;
-      }
-      break;
-    case CYCLE_ON_TO_OFF:
-      if (lightOnToOff()) {
-        _currentState = CYCLE_OFF;
-      }
-      break;
-    default:
-      _currentState = CYCLE_OFF;
-  }
-}
 
 /*
    LEDRandomLightingCycle

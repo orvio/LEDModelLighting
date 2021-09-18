@@ -53,21 +53,10 @@ class LEDStaticLighting {
     virtual void execute();
 };
 
-class LEDLightingCycle: public LEDStaticLighting {
-  protected:
-    unsigned long _onTimeMs;
-    unsigned long _offTimeMs;
-    unsigned long _timeOfNextSwitchMs;
-
-  public:
-    LEDLightingCycle(unsigned char const ledPin, unsigned char const brightness,
-                     unsigned long const onTimeMs, unsigned long const offTimeMs,
-                     LEDCyclicEffect * const onEffect = new LEDCyclicEffect(),
-                     LEDOneShotEffect * const offToOnEffect = 0,
-                     LEDOneShotEffect * const onToOffEffect = 0);
-    void execute();
-};
-
+/**
+   This class toggles between on and off state based on the minimum and maximum
+   duration for each state.
+*/
 class LEDRandomLightingCycle: public LEDStaticLighting {
   protected:
     unsigned long _onTimeMinMs;
@@ -84,5 +73,17 @@ class LEDRandomLightingCycle: public LEDStaticLighting {
                            LEDOneShotEffect * const offToOnEffect = 0,
                            LEDOneShotEffect * const onToOffEffect = 0);
     void execute();
+};
+
+/**
+ * This class cycles between the on and off state with a fixed timing for each state.
+*/
+class LEDLightingCycle: public LEDRandomLightingCycle {
+  public:
+    LEDLightingCycle(unsigned char const ledPin, unsigned char const brightness,
+                     unsigned long const onTimeMs, unsigned long const offTimeMs,
+                     LEDCyclicEffect * const onEffect = new LEDCyclicEffect(),
+                     LEDOneShotEffect * const offToOnEffect = 0,
+                     LEDOneShotEffect * const onToOffEffect = 0);
 };
 #endif
