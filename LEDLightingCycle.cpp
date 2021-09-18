@@ -105,7 +105,7 @@ LEDRandomLightingCycle::LEDRandomLightingCycle(unsigned char const ledPin, unsig
     LEDCyclicEffect * const onEffect,
     LEDOneShotEffect * const offToOnEffect,
     LEDOneShotEffect * const onToOffEffect ):
-  LEDStaticLighting(ledPin, brightness, CYCLE_ON, onEffect, offToOnEffect, onToOffEffect),
+  LEDStaticLighting(ledPin, brightness, CYCLE_OFF, onEffect, offToOnEffect, onToOffEffect),
   _onTimeMinMs(onTimeMinMs),
   _onTimeMaxMs(onTimeMaxMs),
   _offTimeMinMs(offTimeMinMs),
