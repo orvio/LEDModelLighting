@@ -29,16 +29,19 @@ class LEDLightingEffect {
 class LEDOneShotEffect : public LEDLightingEffect {
   protected:
     const unsigned short _durationMs;
+    const unsigned short _maxStartDelayMs;
+    unsigned short _startDelayMs;
     unsigned long _startMs;
 
   protected:
     virtual unsigned short getRemainingDuration(const unsigned long currentTimeMs);
+    virtual unsigned short getRemainingStartDelay(const unsigned long currentTimeMs);
 
   public:
     virtual void reset();
     unsigned short getDurationMs();
     char isFinished();
-    LEDOneShotEffect(unsigned short const durationMs);
+    LEDOneShotEffect(const unsigned short durationMs, const unsigned short maxStartDelayMs = 0);
 };
 
 /**
@@ -51,7 +54,7 @@ class FadeEffect : public LEDOneShotEffect {
     unsigned char const _fadeDirection;
 
   public:
-    FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection);
+    FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection, const unsigned short maxStartDelayMs = 0);
     unsigned char getBrightness( unsigned char const maxBrightness);
 };
 
@@ -84,7 +87,7 @@ class FluorescentStartEffect : public LEDOneShotEffect {
   protected:
     unsigned short getRemainingDuration(const unsigned long currentTimeMs);
   public:
-    FluorescentStartEffect(unsigned short const minDurationMs, unsigned short const durationMs);
+    FluorescentStartEffect(unsigned short const minDurationMs, unsigned short const durationMs, const unsigned short maxStartDelayMs = 0);
     unsigned char getBrightness( unsigned char const maxBrightness);
     void reset();
 };

@@ -24,8 +24,9 @@ unsigned char LEDLightingEffect::getBrightness( unsigned char const maxBrightnes
 /*
    KEDOneShotEffect
 */
-LEDOneShotEffect::LEDOneShotEffect(unsigned short const durationMs):
-  _durationMs(durationMs)
+LEDOneShotEffect::LEDOneShotEffect(unsigned short const durationMs, const unsigned short maxStartDelayMs):
+  _durationMs(durationMs),
+  _maxStartDelayMs(maxStartDelayMs)
 {}
 
 unsigned short LEDOneShotEffect::getDurationMs() {
@@ -34,32 +35,54 @@ unsigned short LEDOneShotEffect::getDurationMs() {
 
 void LEDOneShotEffect::reset() {
   _startMs = millis();
+  _startDelayMs = random(0, _maxStartDelayMs);
 }
 
 char LEDOneShotEffect::isFinished() {
-  return millis() - _startMs > _durationMs;
+  //return millis() - _startMs - _startDelayMs > _durationMs;
+  return not getRemainingDuration(millis());
 }
 
 unsigned short LEDOneShotEffect::getRemainingDuration(const unsigned long currentTimeMs) {
-  if ((_startMs + _durationMs) > currentTimeMs) {
+  if ((_startMs + _durationMs + _startDelayMs) > currentTimeMs) {
     //safe to do the subtraction without risking wraparound
-    return (_startMs + _durationMs) - currentTimeMs;
+    return (_startMs + _durationMs + _startDelayMs) - currentTimeMs;
   }
 
   //current time is already after the end of the effect
   return 0;
 }
 
+unsigned short LEDOneShotEffect::getRemainingStartDelay(const unsigned long currentTimeMs) {
+  if ((_startMs + _startDelayMs) > currentTimeMs) {
+    //safe to do the subtraction without risking wraparound
+    return (_startMs + _startDelayMs) - currentTimeMs;
+  }
+
+  //current time is already after the end of the start delay
+  return 0;
+}
+
 /*
    FadeEffect
 */
-FadeEffect::FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection):
-  LEDOneShotEffect(durationMs),
+FadeEffect::FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection, const unsigned short maxStartDelayMs):
+  LEDOneShotEffect(durationMs, maxStartDelayMs),
   _fadeDirection(fadeDirection)
 {}
 
 unsigned char FadeEffect::getBrightness( unsigned char const maxBrightness) {
-  float fadeProgressPercent = (millis() - _startMs) / (float)_durationMs;
+  const unsigned long currentTimeMs = millis();
+  if (getRemainingStartDelay(currentTimeMs)) {
+    if ( _fadeDirection == FADE_OUT ) {
+      return maxBrightness;
+    }
+    else {
+      return 0;
+    }
+  }
+
+  float fadeProgressPercent = (currentTimeMs - (_startMs + _startDelayMs)) / (float)_durationMs;
   if ( _fadeDirection == FADE_OUT ) {
     fadeProgressPercent = 1 - fadeProgressPercent;
   }
@@ -69,8 +92,10 @@ unsigned char FadeEffect::getBrightness( unsigned char const maxBrightness) {
 /*
    FluorescentStartEffect
 */
-FluorescentStartEffect::FluorescentStartEffect(unsigned short const minDurationMs, unsigned short const durationMs):
-  LEDOneShotEffect(durationMs),
+FluorescentStartEffect::FluorescentStartEffect(unsigned short const minDurationMs,
+    unsigned short const durationMs,
+    const unsigned short maxStartDelayMs):
+  LEDOneShotEffect(durationMs, maxStartDelayMs),
   _minDurationMs(minDurationMs),
   _currentStageStartTimeMs(0),
   _currentStageDurationMs(0),
@@ -78,9 +103,9 @@ FluorescentStartEffect::FluorescentStartEffect(unsigned short const minDurationM
 {}
 
 unsigned short FluorescentStartEffect::getRemainingDuration(const unsigned long currentTimeMs) {
-  if ((_startMs + _currentDurationMs) > currentTimeMs) {
+  if ((_startMs + _currentDurationMs + _startDelayMs) > currentTimeMs) {
     //safe to do the subtraction without risking wraparound
-    return (_startMs + _currentDurationMs) - currentTimeMs;
+    return (_startMs + _currentDurationMs + _startDelayMs) - currentTimeMs;
   }
 
   //current time is already after the end of the effect
@@ -92,7 +117,7 @@ unsigned char FluorescentStartEffect::getNextStage(const unsigned long currentTi
   const long randomNumber = random(0, 10);
   unsigned char isFloatAllowed = 0;
 
-  const unsigned short elapsedTimeMs = currentTimeMs - _startMs;
+  const unsigned short elapsedTimeMs = currentTimeMs - (_startMs + _startDelayMs);
   if ( elapsedTimeMs > (_currentDurationMs  / 2)) {
     isFloatAllowed = 1;
   }
@@ -160,7 +185,11 @@ void FluorescentStartEffect::setupNextStage(const unsigned long currentTimeMs) {
 
 unsigned char FluorescentStartEffect::getBrightness( unsigned char const maxBrightness) {
   unsigned long currentTimeMs = millis();
-  unsigned char brightness;
+  unsigned char brightness = 0;
+
+  if (getRemainingStartDelay(currentTimeMs)) {
+    return brightness;
+  }
 
   if (_currentStage == START_UNINITIALIZED) {
     _currentStage = START_FLICKER;
