@@ -32,7 +32,9 @@ LEDStaticLighting::LEDStaticLighting(unsigned char const ledPin,
   _onEffect(onEffect),
   _offToOnEffect(offToOnEffect),
   _onToOffEffect(onToOffEffect)
-{}
+{
+  pinMode(_ledPin, OUTPUT);
+}
 
 void LEDStaticLighting::execute() {
   switch (_currentState) {
