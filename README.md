@@ -17,7 +17,7 @@ The easiest way to get started is to create a new sketch and replace the entire 
 #include <LEDLightingCycle.h>
 
 //define number of LEDs
-#define LED_COUNT 7
+#define LED_COUNT 1
 
 //LED setup
 LEDStaticLighting * ledSetups[LED_COUNT];
