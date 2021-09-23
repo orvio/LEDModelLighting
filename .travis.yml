@@ -2,7 +2,7 @@ sudo: false
 
 branches:
   only:
-    - master
+    - main
 
 addons:
   apt:
@@ -18,4 +18,4 @@ deploy:
   local_dir: docs/html
   github_token: $GH_REPO_TOKEN
   on:
-    branch: master
+    branch: main
