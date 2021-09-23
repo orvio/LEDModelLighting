@@ -8,6 +8,8 @@ On windows that folder is usually located under Documents/Arduino/libraries.
 After copying the files into your library folder you need to restart the Arduino IDE.
 
 ## Usage
+The full API documention is at: https://orvio.github.io/LEDModelLighting/
+
 After installing the library files simply put
 ```#include <LEDLightingCycle.h>```
 at the start of you sketch to be able to use the library functions.
