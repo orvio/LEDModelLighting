@@ -17,35 +17,88 @@
 #ifndef LEDLIGHTINGEFFECT_H
 #define LEDLIGHTINGEFFECT_H
 
-
+/**
+   @brief Base class for all lighting effects
+*/
 class LEDLightingEffect {
   public:
+    /**
+       @brief returns the current brightness for the output
+
+       Computes the current brightness of the output based on \p maxBrightness.
+    */
     virtual unsigned char getBrightness( unsigned char const maxBrightness);
 };
 
 /**
-   Base class for on/off transitions
+   @brief Base class for on/off transitions
 */
 class LEDOneShotEffect : public LEDLightingEffect {
   protected:
+    ///Duration of the effect in ms
     const unsigned short _durationMs;
+    ///Maximum start delay in ms
     const unsigned short _maxStartDelayMs;
+    //Start delay for the current execution of the effect in ms
     unsigned short _startDelayMs;
+    //Start time of the current execution in ms
     unsigned long _startMs;
 
   protected:
+    /**
+      @brief Returns the remaining duration of the current execution of the effect.
+
+      This method uses \p currentTimeMs as the current absolute time of the Arduino as returned by millis()
+
+      @param currentTimeMs current absolute time in ms
+      @params remaining duration of the effect in ms
+    */
     virtual unsigned short getRemainingDuration(const unsigned long currentTimeMs);
+
+    /**
+      @brief Returns the remaining start delay of the current execution of the effect.
+
+      This method uses \p currentTimeMs as the current absolute time of the Arduino as returned by millis()
+
+      @param currentTimeMs current absolute time in ms
+      @params remaining start delay of the effect in ms
+    */
     virtual unsigned short getRemainingStartDelay(const unsigned long currentTimeMs);
 
   public:
+    /**
+      @brief Resets the effect for the next execution.
+
+      The default implementation sets #_startMs to now and #_startDelayMs to a random value between 0 and #_maxStartDelayMs
+    */
     virtual void reset();
+
+    /**
+      @brief returns the value of #_durationMs.
+
+      This method does not take #_startDelayMs into account.
+    */
     unsigned short getDurationMs();
+
+    /**
+      @brief returns 1 if the effect has finished.
+
+      This method uses #getDurationMs() to determine if there is time left on this effect.
+      @return 1 if the effect has finished, 0 if time is remaining
+    */
     char isFinished();
+
+    /**
+      @brief creates a new LEDOneShotEffect object
+
+      @param durationMs duration of the effect in ms
+      @param maxStartDelayMs maximum start delay of the effect in ms
+    */
     LEDOneShotEffect(const unsigned short durationMs, const unsigned short maxStartDelayMs = 0);
 };
 
 /**
-  Class for fade in/fade out transitions
+  @brief Class for fade in/fade out transitions
 */
 class FadeEffect : public LEDOneShotEffect {
 #define FADE_IN 0
@@ -59,7 +112,7 @@ class FadeEffect : public LEDOneShotEffect {
 };
 
 /**
-  Effect cass for transitions emulating a fluorescent light starting up
+  @brief Effect cass for transitions emulating a fluorescent light starting up
 */
 class FluorescentStartEffect : public LEDOneShotEffect {
 #define START_UNINITIALIZED 0
@@ -93,14 +146,14 @@ class FluorescentStartEffect : public LEDOneShotEffect {
 };
 
 /**
-   Base class for permanent light effects
+  @brief Base class for permanent light effects
 */
 class LEDCyclicEffect : public LEDLightingEffect {
 
 };
 
 /**
-   Cyclic effect class for emulating a rotary beacon
+   @brief Cyclic effect class for emulating a rotary beacon
 */
 class BeaconEffect : public LEDCyclicEffect {
   private:

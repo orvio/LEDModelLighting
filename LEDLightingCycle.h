@@ -20,12 +20,12 @@
 #include "LEDLightingEffect.h"
 
 /**
-   Base class for lighting cycle execution.
+   @brief Base class for lighting cycle execution.
 
    Objects of this type govern when the LED is powered on.
 
    Additional effects when the LED is powered on or when it
-   trasitions between the states are governed by effect classes.
+   transitions between the states are governed by effect classes.
 */
 class LEDStaticLighting {
 #define CYCLE_OFF 0
@@ -48,7 +48,7 @@ class LEDStaticLighting {
     LEDCyclicEffect * const _onEffect;
 
     /**
-       Turns the output off.
+      @brief Turns the output off.
     */
     void lightOff();
 
@@ -82,13 +82,15 @@ class LEDStaticLighting {
     char lightOnToOff();
 
     /**
-      Resets both the _offToOnEffect and _onToOffEffect to setup the next effect execution cycle.
+      @brief Resets both the _offToOnEffect and _onToOffEffect to setup the next effect execution cycle.
     */
     void resetTransitions();
 
   public:
     /**
-       Creates a new LEDStaticLighting object. This lighting object will keep the output active with the
+       @brief Creates a new LEDStaticLighting object.
+
+       This lighting object will keep the output active with the
        configured brightness if the initial state is set to CYCLE_ON. All other states will result in the output
        being turned off.
 
@@ -105,15 +107,17 @@ class LEDStaticLighting {
                       LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
 
     /**
-       This method needs to be called in the loop() function of the sketch.
+       @brief This method needs to be called in the loop() function of the sketch.
+
+       The default implementation calls either #lightOn() or #lightOff() based on #_currentState.
     */
     virtual void execute();
 };
 
 /**
-   This class toggles between on and off state based on the minimum and maximum duration for each state.
+   @brief This class toggles between on and off state based on the minimum and maximum duration for each state.
 
-   The times required for the _offToOnEffect and onToOffEffect eat into the the on time and off time respectively.
+   The times required for the #_offToOnEffect and #_onToOffEffect eat into the the on time and off time respectively.
    The transition effects will always play out in full, even when they take longer than the total time alotted for the
    on or off state they are assigned to.
 */
@@ -132,7 +136,7 @@ class LEDRandomLightingCycle: public LEDStaticLighting {
 
   public:
     /**
-      Creates a new LEDRandomLightingCycle object.
+      @brief Creates a new LEDRandomLightingCycle object.
 
       @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
       @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
@@ -152,18 +156,18 @@ class LEDRandomLightingCycle: public LEDStaticLighting {
                            LEDOneShotEffect * const onToOffEffect = 0);
 
     /**
-      Executes the output cycle code.
+      @brief Executes the output cycle code.
     */
     void execute();
 };
 
 /**
-   This class cycles between the on and off state with a fixed timing for each state.
+  @brief This class cycles between the on and off state with a fixed timing for each state.
 */
 class LEDLightingCycle: public LEDRandomLightingCycle {
   public:
     /**
-      Creates a new LEDLightingCycle object.
+      @brief Creates a new LEDLightingCycle object.
 
       @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
       @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
