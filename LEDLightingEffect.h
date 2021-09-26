@@ -23,9 +23,12 @@
 class LEDLightingEffect {
   public:
     /**
-       @brief returns the current brightness for the output
+      @brief returns the current brightness for the output
 
-       Computes the current brightness of the output based on \p maxBrightness.
+      Computes the current brightness of the output based on \p maxBrightness.
+
+      @param maxBrightness max allowed brightness for the output
+      @return current output brightness
     */
     virtual unsigned char getBrightness( unsigned char const maxBrightness);
 };
@@ -39,9 +42,9 @@ class LEDOneShotEffect : public LEDLightingEffect {
     const unsigned short _durationMs;
     ///Maximum start delay in ms
     const unsigned short _maxStartDelayMs;
-    //Start delay for the current execution of the effect in ms
+    ///Start delay for the current execution of the effect in ms
     unsigned short _startDelayMs;
-    //Start time of the current execution in ms
+    ///Start time of the current execution in ms
     unsigned long _startMs;
 
   protected:
@@ -51,7 +54,7 @@ class LEDOneShotEffect : public LEDLightingEffect {
       This method uses \p currentTimeMs as the current absolute time of the Arduino as returned by millis()
 
       @param currentTimeMs current absolute time in ms
-      @params remaining duration of the effect in ms
+      @return remaining duration of the effect in ms
     */
     virtual unsigned short getRemainingDuration(const unsigned long currentTimeMs);
 
@@ -61,7 +64,7 @@ class LEDOneShotEffect : public LEDLightingEffect {
       This method uses \p currentTimeMs as the current absolute time of the Arduino as returned by millis()
 
       @param currentTimeMs current absolute time in ms
-      @params remaining start delay of the effect in ms
+      @return remaining start delay of the effect in ms
     */
     virtual unsigned short getRemainingStartDelay(const unsigned long currentTimeMs);
 
@@ -77,6 +80,7 @@ class LEDOneShotEffect : public LEDLightingEffect {
       @brief returns the value of #_durationMs.
 
       This method does not take #_startDelayMs into account.
+      @return remaining effect duration in ms
     */
     unsigned short getDurationMs();
 
@@ -104,10 +108,19 @@ class FadeEffect : public LEDOneShotEffect {
 #define FADE_IN 0
 #define FADE_OUT 1
   private:
+    ///direction of the fade effect, either FADE_IN or FADE_OUT
     unsigned char const _fadeDirection;
 
   public:
+    /**
+      @brief creates a new FadeEffect instance
+
+      @param durationMs fade duration in ms
+      @param fadeDirection direction of the fade effect, either FADE_IN or FADE_OUT
+      @param maxStartDelayMs maximum possible start delay in ms
+    */
     FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection, const unsigned short maxStartDelayMs = 0);
+
     unsigned char getBrightness( unsigned char const maxBrightness);
 };
 
@@ -157,10 +170,24 @@ class LEDCyclicEffect : public LEDLightingEffect {
 */
 class BeaconEffect : public LEDCyclicEffect {
   private:
+    ///cycle time for one beacon rotation in ms
     unsigned int _cycleTimeMs; //16 bit for 65s max cycle time
 
   public:
+    /**
+      @brief create a bew BeaconEffect instance
+
+      @param cycleTimeMs beacon cycle time in ms
+    */
     BeaconEffect(unsigned int const cycleTimeMs);
+
+    /**
+      @brief returns the current brightness for the output
+
+      Computes the current brightness of the output based on \p maxBrightness and the current position in the beacon cycle.
+      @param maxBrightness max allowed brightness for the output
+      @return current output brightness
+    */
     unsigned char getBrightness( unsigned char const maxBrightness);
 };
 
