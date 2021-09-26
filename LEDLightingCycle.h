@@ -21,6 +21,7 @@
 
 /**
    Base class for lighting cycle execution.
+
    Objects of this type govern when the LED is powered on.
 
    Additional effects when the LED is powered on or when it
@@ -32,16 +33,22 @@ class LEDStaticLighting {
 #define CYCLE_ON 2
 #define CYCLE_ON_TO_OFF 3
   protected:
-    unsigned char _currentState; ///current state of the output pin
-    unsigned char _brightness; ///Brightness of the output pin. If effects are configured, this value is the maximum brightness.
-    unsigned char const _ledPin; ///pin number of the output
+    ///current state of the output pin
+    unsigned char _currentState;
+    ///Brightness of the output pin. If effects are configured, this value is the maximum brightness.
+    unsigned char _brightness;
+    ///pin number of the output
+    unsigned char const _ledPin;
 
-    LEDOneShotEffect * const _offToOnEffect; ///Effect to be used when the output transitions from CYCLE_OFF to CYCLE_ON
-    LEDOneShotEffect * const _onToOffEffect; ///Effect to be used when the output transitions fron CYCLE_ON to CYCLE_OFF
-    LEDCyclicEffect * const _onEffect; ///Effect to be used when the output is active
+    ///Effect to be used when the output transitions from CYCLE_OFF to CYCLE_ON
+    LEDOneShotEffect * const _offToOnEffect;
+    ///Effect to be used when the output transitions fron CYCLE_ON to CYCLE_OFF
+    LEDOneShotEffect * const _onToOffEffect;
+    ///Effect to be used when the output is active
+    LEDCyclicEffect * const _onEffect;
 
     /**
-       Turns the output off
+       Turns the output off.
     */
     void lightOff();
 
@@ -104,24 +111,49 @@ class LEDStaticLighting {
 };
 
 /**
-   This class toggles between on and off state based on the minimum and maximum
-   duration for each state.
+   This class toggles between on and off state based on the minimum and maximum duration for each state.
+
+   The times required for the _offToOnEffect and onToOffEffect eat into the the on time and off time respectively.
+   The transition effects will always play out in full, even when they take longer than the total time alotted for the
+   on or off state they are assigned to.
 */
 class LEDRandomLightingCycle: public LEDStaticLighting {
   protected:
+    ///Minimum on (active) time in ms
     unsigned long _onTimeMinMs;
+    ///Maximum on (active) time in ms
     unsigned long _onTimeMaxMs;
+    ///Minimum off (inactive) time in ms
     unsigned long _offTimeMinMs;
+    ///Maximum off (inactive) time in ms
     unsigned long _offTimeMaxMs;
+    ///Time for the next transition from off to on or vice versa
     unsigned long _timeOfNextSwitchMs;
 
   public:
+    /**
+      Creates a new LEDRandomLightingCycle object.
+
+      @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
+      @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
+      @param onTimeMinMs Minimum on (active) time in ms
+      @param onTimeMaxMs Maximum on (active) time in ms
+      @param offTimeMinMs Minimum off (inactive) time in ms
+      @param offTimeMaxMs Maximum off (inactive) time in ms
+      @param onEffect sets the effect class to use when the output is active
+      @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
+      @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
+    */
     LEDRandomLightingCycle(unsigned char const ledPin, unsigned char const brightness,
                            unsigned long const onTimeMinMs, unsigned long const onTimeMaxMs,
                            unsigned long const offTimeMinMs, unsigned long const offTimeMaxMs,
                            LEDCyclicEffect * const onEffect = new LEDCyclicEffect(),
                            LEDOneShotEffect * const offToOnEffect = 0,
                            LEDOneShotEffect * const onToOffEffect = 0);
+
+    /**
+      Executes the output cycle code.
+    */
     void execute();
 };
 
@@ -130,6 +162,17 @@ class LEDRandomLightingCycle: public LEDStaticLighting {
 */
 class LEDLightingCycle: public LEDRandomLightingCycle {
   public:
+    /**
+      Creates a new LEDLightingCycle object.
+
+      @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
+      @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
+      @param onTimeMinMs on (active) time in ms
+      @param offTimeMax off (inactive) time in ms
+      @param onEffect sets the effect class to use when the output is active
+      @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
+      @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
+    */
     LEDLightingCycle(unsigned char const ledPin, unsigned char const brightness,
                      unsigned long const onTimeMs, unsigned long const offTimeMs,
                      LEDCyclicEffect * const onEffect = new LEDCyclicEffect(),
