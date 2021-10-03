@@ -171,8 +171,8 @@ class LEDLightingCycle: public LEDRandomLightingCycle {
 
       @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
       @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
-      @param onTimeMinMs on (active) time in ms
-      @param offTimeMax off (inactive) time in ms
+      @param onTimeMs on (active) time in ms
+      @param offTimeMs off (inactive) time in ms
       @param onEffect sets the effect class to use when the output is active
       @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
       @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF

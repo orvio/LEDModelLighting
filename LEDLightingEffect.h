@@ -141,20 +141,67 @@ class FluorescentStartEffect : public LEDOneShotEffect {
 #define START_FLOAT_MIN_DURATION_MS 500
 #define START_FLOAT_MAX_DURATION_MS 3000
   private:
+    ///start time of the current stage in ms
     unsigned long _currentStageStartTimeMs;
+    /**
+      @brief duration of the current stage in ms
+
+      The duration of the current stage extend beyond the total duration of the effect. The current stage will be cut short in this case.
+    */
     unsigned short _currentStageDurationMs;
+    ///type of the current effect stage
     unsigned char _currentStage;
+    ///duration of the current execution cycle of the effect in ms
     unsigned short _currentDurationMs;
+    ///minimum duration of the effect in ms
     const unsigned short _minDurationMs;
 
+    /**
+      @bief returns the next stage of the effects
+
+      The permissible stages can vary depending on the amount of the effect has already been running.
+      The next stage is determined randomly out of the pool of permissible stages.
+
+      @param currentTimeMs current time in ms as returned by millis()
+      @return the next stage to be executed
+    */
     unsigned char getNextStage(const unsigned long currentTimeMs);
+
+    /**
+      @brief prepares the next stage execution
+    */
     void setupNextStage(const unsigned long currentTimeMs);
 
   protected:
+    /**
+      @brief returns the remaining duration of the effect
+
+      This effect does not always use up the entire time alotted in the constructor.
+
+      @param currentTimeMs current time in ms as returned by millis()
+      @return the remaining execution time in ms
+    */
     unsigned short getRemainingDuration(const unsigned long currentTimeMs);
+
   public:
-    FluorescentStartEffect(unsigned short const minDurationMs, unsigned short const durationMs, const unsigned short maxStartDelayMs = 0);
+    /**
+      @brief creates a new FluorescentStartEffect instance
+
+      This effect executes a random startup flicker. The duration of the flicker can further be influenced by \p minDurationMs
+      to create startup flickers of a random duration each time the effect executes.
+
+      @param minDurationMs minimum effect duration in ms
+      @param maxDurationMs maximum effect duration in ms
+      @param maxStartDelayMs maximum possible start delay in ms
+    */
+    FluorescentStartEffect(unsigned short const minDurationMs, unsigned short const maxDurationMs, const unsigned short maxStartDelayMs = 0);
     unsigned char getBrightness( unsigned char const maxBrightness);
+
+    /**
+      @brief resets the effect for the next effect execution cycle
+
+      The duration of the following cycle is also determined in this function call.
+    */
     void reset();
 };
 

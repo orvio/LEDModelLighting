@@ -1,4 +1,5 @@
-sudo: false
+os: linux
+language: c
 
 branches:
   only:
@@ -14,8 +15,9 @@ script:
 
 deploy:
   provider: pages
-  skip_cleanup: true
+  cleanup: false
   local_dir: docs/html
   github_token: $GH_REPO_TOKEN
+  strategy: git
   on:
     branch: main
