@@ -18,6 +18,5 @@ deploy:
   cleanup: false
   local_dir: docs/html
   token: $GH_REPO_TOKEN
-  strategy: git
   on:
     branch: main
