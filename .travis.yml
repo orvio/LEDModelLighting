@@ -19,5 +19,6 @@ deploy:
   cleanup: false
   local_dir: docs/html
   token: $GH_REPO_TOKEN
+  edge: true
   on:
     branch: main
