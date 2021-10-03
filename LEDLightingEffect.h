@@ -157,7 +157,7 @@ class FluorescentStartEffect : public LEDOneShotEffect {
     const unsigned short _minDurationMs;
 
     /**
-      @bief returns the next stage of the effects
+      @brief returns the next stage of the effects
 
       The permissible stages can vary depending on the amount of the effect has already been running.
       The next stage is determined randomly out of the pool of permissible stages.
