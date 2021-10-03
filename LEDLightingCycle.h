@@ -112,7 +112,78 @@ class LEDStaticLighting {
        The default implementation calls either #lightOn() or #lightOff() based on #_currentState.
     */
     virtual void execute();
+
+    /**
+      @brief returns true if the output is active.
+
+      The output counts as active as soon as #_offToOnEffect starts executing.
+
+      @return true if the output is active
+    */
+    unsigned char isOutputActive() const;
 };
+
+/**
+  @brief This class watches a trigger variable to determine the on and off state of the LED
+
+  A reference to an unsigned char variable is monitored to determine the target state of the output.
+  A value of 0 deactivates the output, any other value will active the output.
+
+  A range for random activation or deactivation delays can be specified.
+*/
+class LEDTriggeredCycle : public LEDStaticLighting {
+  private:
+    ///reference to the trigger variable
+    const unsigned char & _trigger;
+
+  protected:
+    ///time for the next switch in ms
+    unsigned long _nextSwitchTimeMs;
+    ///minimum activation delay in ms
+    const unsigned long _onDelayMinMs;
+    ///maximum activation delay in ms
+    const unsigned long _onDelayMaxMs;
+    ///minimum deactivation delay in ms
+    const unsigned long _offDelayMinMs;
+    ///maximum deactivation delay in ms
+    const unsigned long _offDelayMaxMs;
+
+  public:
+    /**
+      @brief creates a new LEDTriggeredCycle instance
+
+      A value of 0 on the trigger variable deactivates the output, any other values active the output.
+
+      @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
+      @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
+      @param onDelayMinMs minimum activation delay in ms
+      @param onDelayMaxMs maximum activation delay in ms
+      @param offDelayMinMs minimum deactivation delay in ms
+      @param offDelayMaxMs maximum deactivation delay in ms
+      @param trigger reference to the trigger variable
+      @param onEffect sets the effect class to use when the output is active
+      @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
+      @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
+    */
+    LEDTriggeredCycle(unsigned char const ledPin, unsigned char const brightness,
+                      unsigned long const onDelayMinMs, unsigned long const onDelayMaxMs,
+                      unsigned long const offDelayMinMs, unsigned long const offDelayMaxMs, unsigned char & trigger,
+                      LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
+
+    virtual void execute();
+};
+
+class LEDChainedCycle : public LEDStaticLighting {
+  private:
+    LEDStaticLighting const * const _masterCycle;
+
+  public:
+    LEDChainedCycle(unsigned char const ledPin, unsigned char const brightness, LEDStaticLighting const * const  masterCycle,
+                    LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
+
+    virtual void execute();
+};
+
 
 /**
    @brief This class toggles between on and off state based on the minimum and maximum duration for each state.

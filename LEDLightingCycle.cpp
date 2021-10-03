@@ -88,6 +88,134 @@ char LEDStaticLighting::lightOnToOff() {
   return _onToOffEffect->isFinished();
 }
 
+unsigned char LEDStaticLighting::isOutputActive() const {
+  return (_currentState == CYCLE_ON) || (_currentState == CYCLE_ON_TO_OFF);
+}
+
+/*
+  LEDTriggeredCycle
+*/
+LEDTriggeredCycle::LEDTriggeredCycle(unsigned char const ledPin,
+                                     unsigned char const brightness,
+                                     unsigned long const onDelayMinMs,
+                                     unsigned long const onDelayMaxMs,
+                                     unsigned long const offDelayMinMs,
+                                     unsigned long const offDelayMaxMs,
+                                     unsigned char & trigger,
+                                     LEDCyclicEffect * const onEffect,
+                                     LEDOneShotEffect * const offToOnEffect,
+                                     LEDOneShotEffect * const onToOffEffect):
+  LEDStaticLighting(ledPin, brightness, CYCLE_OFF, onEffect, offToOnEffect, onToOffEffect),
+  _nextSwitchTimeMs(0),
+  _onDelayMinMs(onDelayMinMs),
+  _onDelayMaxMs(onDelayMaxMs),
+  _offDelayMinMs(offDelayMinMs),
+  _offDelayMaxMs(offDelayMaxMs),
+  _trigger(trigger)
+{
+
+}
+
+void LEDTriggeredCycle::execute() {
+  const unsigned long currentTimeMs = millis();
+
+  switch (_currentState) {
+    case CYCLE_OFF:
+      lightOff();
+      if (_trigger) {
+        if (not _nextSwitchTimeMs) {
+          _nextSwitchTimeMs = currentTimeMs + random(_onDelayMinMs, _onDelayMaxMs);
+        }
+
+        if ( currentTimeMs > _nextSwitchTimeMs ) {
+          _nextSwitchTimeMs = 0;
+          resetTransitions();
+          _currentState = CYCLE_OFF_TO_ON;
+        }
+      }
+      break;
+    case CYCLE_OFF_TO_ON:
+      {
+        const char isTransitionDone = lightOffToOn();
+        if (not _trigger) {
+          if (not _nextSwitchTimeMs) {
+            _nextSwitchTimeMs = currentTimeMs + random(_offDelayMinMs, _offDelayMaxMs);
+          }
+
+          if ( currentTimeMs > _nextSwitchTimeMs ) {
+            _nextSwitchTimeMs = 0;
+            resetTransitions();
+            _currentState = CYCLE_ON_TO_OFF;
+          }
+          else if (isTransitionDone) {
+            _currentState = CYCLE_ON;
+          }
+        }
+        else if ( isTransitionDone ) {
+          _currentState = CYCLE_ON;
+        }
+      }
+      break;
+    case CYCLE_ON:
+      lightOn();
+      if (not _trigger) {
+        if (not _nextSwitchTimeMs) {
+          _nextSwitchTimeMs = currentTimeMs + random(_offDelayMinMs, _offDelayMaxMs);
+        }
+
+        if ( currentTimeMs > _nextSwitchTimeMs ) {
+          _nextSwitchTimeMs = 0;
+          resetTransitions();
+          _currentState = CYCLE_ON_TO_OFF;
+        }
+      }
+      break;
+    case CYCLE_ON_TO_OFF:
+      {
+        const char isTransitionDone = lightOnToOff();
+        if (_trigger) {
+          if (not _nextSwitchTimeMs) {
+            _nextSwitchTimeMs = currentTimeMs + random(_onDelayMinMs, _onDelayMaxMs);
+          }
+
+          if ( currentTimeMs > _nextSwitchTimeMs ) {
+            _nextSwitchTimeMs = 0;
+            resetTransitions();
+            _currentState = CYCLE_OFF_TO_ON;
+          }
+          else if (isTransitionDone) {
+            _currentState = CYCLE_OFF;
+          }
+        }
+        else if ( isTransitionDone ) {
+          _currentState = CYCLE_OFF;
+        }
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+/*
+   LEDChainedCycle
+*/
+LEDChainedCycle::LEDChainedCycle(unsigned char const ledPin,
+                                 unsigned char const brightness,
+                                 LEDStaticLighting const * const  masterCycle,
+                                 LEDCyclicEffect * const onEffect,
+                                 LEDOneShotEffect * const offToOnEffect,
+                                 LEDOneShotEffect * const onToOffEffect):
+  LEDStaticLighting(ledPin, brightness, CYCLE_OFF, onEffect, offToOnEffect, onToOffEffect),
+  _masterCycle(masterCycle)
+{
+
+}
+
+void LEDChainedCycle::execute() {
+  _masterCycle->isOutputActive();
+}
+
 /*
    LEDLightingCycle
 */
