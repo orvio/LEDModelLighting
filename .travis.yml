@@ -14,10 +14,11 @@ script:
   - doxygen Doxyfile
 
 deploy:
-  provider: pages
+  provider: pages:git
+  keep_history: false
   cleanup: false
   local_dir: docs/html
   token: $GH_REPO_TOKEN
-  strategy: git
+  edge: true
   on:
     branch: main
