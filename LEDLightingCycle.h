@@ -28,13 +28,51 @@
    transitions between the states are governed by effect classes.
 */
 class LEDStaticLighting {
-#define CYCLE_OFF 0
-#define CYCLE_OFF_TO_ON 1
-#define CYCLE_ON 2
-#define CYCLE_ON_TO_OFF 3
+  public:
+    ///State enumeration for standard states of a lighting object
+    enum CycleStates { CYCLE_OFF, ///The output is off
+                       CYCLE_OFF_TO_ON, ///The output is transitioning from off to on using #_offToOnEffect
+                       CYCLE_ON, ///The output is transitioning from on to off using #_onToOffEffect
+                       CYCLE_ON_TO_OFF ///The output is on using the #_onEffect
+                     };
+
+    /**
+       @brief Creates a new LEDStaticLighting object.
+
+       This lighting object will keep the output active with the
+       configured brightness if the initial state is set to CYCLE_ON. All other states will result in the output
+       being turned off.
+
+       The assigned pin will be configured as OUTPUT.
+
+       @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
+       @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
+       @param initialState only CYCLE_ON will result in an output
+       @param onEffect sets the effect class to use when the output is active
+       @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
+       @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
+    */
+    LEDStaticLighting(unsigned char const ledPin, unsigned char const brightness, const CycleStates initialState = CYCLE_ON,
+                      LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
+
+    /**
+       @brief This method needs to be called in the loop() function of the sketch.
+
+       The default implementation calls either #lightOn() or #lightOff() based on #_currentState.
+    */
+    virtual void execute();
+
+    /**
+      @brief returns true if the output is active.
+
+      The output counts as active as soon as #_offToOnEffect starts executing.
+
+      @return true if the output is active
+    */
+    unsigned char isOutputActive() const;
   protected:
     ///current state of the output pin
-    unsigned char _currentState;
+    CycleStates _currentState;
     ///Brightness of the output pin. If effects are configured, this value is the maximum brightness.
     unsigned char _brightness;
     ///pin number of the output
@@ -85,42 +123,6 @@ class LEDStaticLighting {
       @brief Resets both the _offToOnEffect and _onToOffEffect to setup the next effect execution cycle.
     */
     void resetTransitions();
-
-  public:
-    /**
-       @brief Creates a new LEDStaticLighting object.
-
-       This lighting object will keep the output active with the
-       configured brightness if the initial state is set to CYCLE_ON. All other states will result in the output
-       being turned off.
-
-       The assigned pin will be configured as OUTPUT.
-
-       @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
-       @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
-       @param initialState only CYCLE_ON will result in an output
-       @param onEffect sets the effect class to use when the output is active
-       @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
-       @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
-    */
-    LEDStaticLighting(unsigned char const ledPin, unsigned char const brightness, unsigned char const initialState = CYCLE_ON,
-                      LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
-
-    /**
-       @brief This method needs to be called in the loop() function of the sketch.
-
-       The default implementation calls either #lightOn() or #lightOff() based on #_currentState.
-    */
-    virtual void execute();
-
-    /**
-      @brief returns true if the output is active.
-
-      The output counts as active as soon as #_offToOnEffect starts executing.
-
-      @return true if the output is active
-    */
-    unsigned char isOutputActive() const;
 };
 
 /**

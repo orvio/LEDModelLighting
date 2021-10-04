@@ -105,13 +105,13 @@ class LEDOneShotEffect : public LEDLightingEffect {
   @brief Class for fade in/fade out transitions
 */
 class FadeEffect : public LEDOneShotEffect {
-#define FADE_IN 0
-#define FADE_OUT 1
-  private:
-    ///direction of the fade effect, either FADE_IN or FADE_OUT
-    unsigned char const _fadeDirection;
-
   public:
+    ///Enumeration for the fade directions
+    enum FadeDirections {
+      FADE_IN, ///Fades from dark to full brightnes
+      FADE_OUT ///Fades from full brightnes to dark
+    };
+
     /**
       @brief creates a new FadeEffect instance
 
@@ -119,28 +119,28 @@ class FadeEffect : public LEDOneShotEffect {
       @param fadeDirection direction of the fade effect, either FADE_IN or FADE_OUT
       @param maxStartDelayMs maximum possible start delay in ms
     */
-    FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection, const unsigned short maxStartDelayMs = 0);
+    FadeEffect(unsigned short const durationMs, const FadeDirections fadeDirection, const unsigned short maxStartDelayMs = 0);
 
     unsigned char getBrightness( unsigned char const maxBrightness);
+  private:
+    ///direction of the fade effect, either FADE_IN or FADE_OUT
+    const FadeDirections _fadeDirection;
 };
 
 /**
   @brief Effect cass for transitions emulating a fluorescent light starting up
 */
 class FluorescentStartEffect : public LEDOneShotEffect {
-#define START_UNINITIALIZED 0
-#define START_OFF 1
-#define START_FLICKER 2
-#define START_FLOAT 3
-#define START_ON 4
-
-#define START_OFF_MIN_DURATION_MS 100
-#define START_OFF_MAX_DURATION_MS 1000
-#define START_FLICKER_MIN_DURATION_MS 10
-#define START_FLICKER_MAX_DURATION_MS 100
-#define START_FLOAT_MIN_DURATION_MS 500
-#define START_FLOAT_MAX_DURATION_MS 3000
   private:
+    ///Enumeration for the internal effect states
+    enum EffectStages {
+      START_UNINITIALIZED, ///Initial stage to randomly decide the start stage
+      START_OFF,///The light is off for a short period of time
+      START_FLICKER, ///The light is on at full brightness for a short period of time
+      START_FLOAT, ///The light floats at about half brightness
+      START_ON ///The light is on at full brightness, no other stages are selected after this stage
+    };
+
     ///start time of the current stage in ms
     unsigned long _currentStageStartTimeMs;
     /**
@@ -150,7 +150,7 @@ class FluorescentStartEffect : public LEDOneShotEffect {
     */
     unsigned short _currentStageDurationMs;
     ///type of the current effect stage
-    unsigned char _currentStage;
+    EffectStages _currentStage;
     ///duration of the current execution cycle of the effect in ms
     unsigned short _currentDurationMs;
     ///minimum duration of the effect in ms
@@ -165,7 +165,7 @@ class FluorescentStartEffect : public LEDOneShotEffect {
       @param currentTimeMs current time in ms as returned by millis()
       @return the next stage to be executed
     */
-    unsigned char getNextStage(const unsigned long currentTimeMs);
+    EffectStages getNextStage(const unsigned long currentTimeMs);
 
     /**
       @brief prepares the next stage execution

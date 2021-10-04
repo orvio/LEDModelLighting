@@ -66,7 +66,7 @@ unsigned short LEDOneShotEffect::getRemainingStartDelay(const unsigned long curr
 /*
    FadeEffect
 */
-FadeEffect::FadeEffect(unsigned short const durationMs, unsigned char const fadeDirection, const unsigned short maxStartDelayMs):
+FadeEffect::FadeEffect(unsigned short const durationMs, const FadeDirections fadeDirection, const unsigned short maxStartDelayMs):
   LEDOneShotEffect(durationMs, maxStartDelayMs),
   _fadeDirection(fadeDirection)
 {}
@@ -92,6 +92,13 @@ unsigned char FadeEffect::getBrightness( unsigned char const maxBrightness) {
 /*
    FluorescentStartEffect
 */
+#define START_OFF_MIN_DURATION_MS 100
+#define START_OFF_MAX_DURATION_MS 1000
+#define START_FLICKER_MIN_DURATION_MS 10
+#define START_FLICKER_MAX_DURATION_MS 100
+#define START_FLOAT_MIN_DURATION_MS 500
+#define START_FLOAT_MAX_DURATION_MS 3000
+
 FluorescentStartEffect::FluorescentStartEffect(unsigned short const minDurationMs,
     unsigned short const durationMs,
     const unsigned short maxStartDelayMs):
@@ -112,8 +119,8 @@ unsigned short FluorescentStartEffect::getRemainingDuration(const unsigned long 
   return 0;
 }
 
-unsigned char FluorescentStartEffect::getNextStage(const unsigned long currentTimeMs) {
-  unsigned char nextStage = START_ON; //default stage if something weird happens...
+FluorescentStartEffect::EffectStages FluorescentStartEffect::getNextStage(const unsigned long currentTimeMs) {
+  EffectStages nextStage = START_ON; //default stage if something weird happens...
   const long randomNumber = random(0, 10);
   unsigned char isFloatAllowed = 0;
 

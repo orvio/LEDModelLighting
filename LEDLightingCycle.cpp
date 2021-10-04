@@ -22,7 +22,7 @@
 */
 LEDStaticLighting::LEDStaticLighting(unsigned char const ledPin,
                                      unsigned char const brightness,
-                                     unsigned char const initialState,
+                                     const CycleStates initialState,
                                      LEDCyclicEffect * const onEffect,
                                      LEDOneShotEffect * const offToOnEffect,
                                      LEDOneShotEffect * const onToOffEffect):
