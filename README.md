@@ -2,7 +2,7 @@
 A small library to control LEDs lighting effects in building models on model railroads an similar purposes.
 
 ## Installation
-Simple copy all the .cpp and .h files into a subdirectory of your Arduino library folder.
+Simply copy all the .cpp and .h files into a subdirectory of your Arduino library folder.
 On windows that folder is usually located under Documents/Arduino/libraries.
 
 After copying the files into your library folder you need to restart the Arduino IDE.
