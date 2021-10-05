@@ -30,11 +30,16 @@
 class LEDStaticLighting {
   public:
     ///State enumeration for standard states of a lighting object
-    enum CycleStates { CYCLE_OFF, ///The output is off
-                       CYCLE_OFF_TO_ON, ///The output is transitioning from off to on using #_offToOnEffect
-                       CYCLE_ON, ///The output is transitioning from on to off using #_onToOffEffect
-                       CYCLE_ON_TO_OFF ///The output is on using the #_onEffect
-                     };
+    enum CycleStates {
+      ///The output is off
+      CYCLE_OFF,
+      ///The output is transitioning from off to on using #_offToOnEffect
+      CYCLE_OFF_TO_ON,
+      ///The output is transitioning from on to off using #_onToOffEffect
+      CYCLE_ON,
+      ///The output is on using the #_onEffect
+      CYCLE_ON_TO_OFF
+    };
 
     /**
        @brief Creates a new LEDStaticLighting object.

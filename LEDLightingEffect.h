@@ -108,8 +108,10 @@ class FadeEffect : public LEDOneShotEffect {
   public:
     ///Enumeration for the fade directions
     enum FadeDirections {
-      FADE_IN, ///Fades from dark to full brightnes
-      FADE_OUT ///Fades from full brightnes to dark
+      ///Fades from dark to full brightnes
+      FADE_IN,
+      ///Fades from full brightnes to dark
+      FADE_OUT
     };
 
     /**
@@ -134,11 +136,16 @@ class FluorescentStartEffect : public LEDOneShotEffect {
   private:
     ///Enumeration for the internal effect states
     enum EffectStages {
-      START_UNINITIALIZED, ///Initial stage to randomly decide the start stage
-      START_OFF,///The light is off for a short period of time
-      START_FLICKER, ///The light is on at full brightness for a short period of time
-      START_FLOAT, ///The light floats at about half brightness
-      START_ON ///The light is on at full brightness, no other stages are selected after this stage
+      ///Initial stage to randomly decide the start stage
+      START_UNINITIALIZED,
+      ///The light is off for a short period of time
+      START_OFF,
+      ///The light is on at full brightness for a short period of time
+      START_FLICKER,
+      ///The light floats at about half brightness
+      START_FLOAT,
+      ///The light is on at full brightness, no other stages are selected after this stage
+      START_ON
     };
 
     ///start time of the current stage in ms
