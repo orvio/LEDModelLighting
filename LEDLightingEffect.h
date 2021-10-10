@@ -88,9 +88,9 @@ class LEDOneShotEffect : public LEDLightingEffect {
       @brief returns 1 if the effect has finished.
 
       This method uses #getDurationMs() to determine if there is time left on this effect.
-      @return 1 if the effect has finished, 0 if time is remaining
+      @return true if the effect has finished, false if time is remaining
     */
-    char isFinished();
+    bool isFinished();
 
     /**
       @brief creates a new LEDOneShotEffect object

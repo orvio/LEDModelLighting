@@ -38,8 +38,7 @@ void LEDOneShotEffect::reset() {
   _startDelayMs = random(0, _maxStartDelayMs);
 }
 
-char LEDOneShotEffect::isFinished() {
-  //return millis() - _startMs - _startDelayMs > _durationMs;
+bool LEDOneShotEffect::isFinished() {
   return not getRemainingDuration(millis());
 }
 
