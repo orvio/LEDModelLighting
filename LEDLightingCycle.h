@@ -74,7 +74,8 @@ class LEDStaticLighting {
 
       @return true if the output is active
     */
-    unsigned char isOutputActive() const;
+    bool isOutputActive() const;
+    
   protected:
     ///current state of the output pin
     CycleStates _currentState;
@@ -109,9 +110,9 @@ class LEDStaticLighting {
       This method checks if _offToOnEffect is set and fetch the current brightness value
       from the effect class.
 
-      @returns 0 as long as the effect has not finished executing
+      @returns false as long as the effect has not finished executing
     */
-    char lightOffToOn();
+    bool lightOffToOn();
 
     /**
       @brief Sets the brightness of the out when transitioning from CYCLE_ON to CYCLE_OFF
@@ -120,9 +121,9 @@ class LEDStaticLighting {
       This method checks if _onToOffEffect is set and fetch the current brightness value
       from the effect class.
 
-      @returns 0 as long as the effect has not finished executing
+      @returns false as long as the effect has not finished executing
     */
-    char lightOnToOff();
+    bool lightOnToOff();
 
     /**
       @brief Resets both the _offToOnEffect and _onToOffEffect to setup the next effect execution cycle.
@@ -184,8 +185,24 @@ class LEDChainedCycle : public LEDStaticLighting {
   private:
     LEDStaticLighting const * const _masterCycle;
 
+    bool _outputWasOn;
+    
+    ///time for the next switch in ms
+    unsigned long _nextSwitchTimeMs;
+    ///minimum activation delay in ms
+    const unsigned long _onDelayMinMs;
+    ///maximum activation delay in ms
+    const unsigned long _onDelayMaxMs;
+    ///Minimum on (active) time in ms
+    unsigned long _onTimeMinMs;
+    ///Maximum on (active) time in ms
+    unsigned long _onTimeMaxMs;
+    ///Minimum off (inactive) time in ms
+
   public:
-    LEDChainedCycle(unsigned char const ledPin, unsigned char const brightness, LEDStaticLighting const * const  masterCycle,
+    LEDChainedCycle(const unsigned char ledPin, const unsigned char brightness, LEDStaticLighting const * const  masterCycle,
+                    const unsigned long onDelayMinMs, const unsigned long onDelayMaxMs,
+                    const unsigned long onTimeMinMs, const unsigned long onTimeMaxMs,
                     LEDCyclicEffect * const onEffect = new LEDCyclicEffect(), LEDOneShotEffect * const offToOnEffect = 0, LEDOneShotEffect * const onToOffEffect = 0);
 
     virtual void execute();

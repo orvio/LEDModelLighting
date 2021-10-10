@@ -67,7 +67,7 @@ void LEDStaticLighting::resetTransitions() {
   }
 }
 
-char LEDStaticLighting::lightOffToOn() {
+bool LEDStaticLighting::lightOffToOn() {
   if ( not _offToOnEffect) {
     return 1;
   }
@@ -78,7 +78,7 @@ char LEDStaticLighting::lightOffToOn() {
 }
 
 
-char LEDStaticLighting::lightOnToOff() {
+bool LEDStaticLighting::lightOnToOff() {
   if ( not _onToOffEffect) {
     return 1;
   }
@@ -88,8 +88,8 @@ char LEDStaticLighting::lightOnToOff() {
   return _onToOffEffect->isFinished();
 }
 
-unsigned char LEDStaticLighting::isOutputActive() const {
-  return (_currentState == CYCLE_ON) || (_currentState == CYCLE_ON_TO_OFF);
+bool LEDStaticLighting::isOutputActive() const {
+  return (_currentState == CYCLE_ON) || (_currentState == CYCLE_OFF_TO_ON);
 }
 
 /*
@@ -203,17 +203,84 @@ void LEDTriggeredCycle::execute() {
 LEDChainedCycle::LEDChainedCycle(unsigned char const ledPin,
                                  unsigned char const brightness,
                                  LEDStaticLighting const * const  masterCycle,
+                                 const unsigned long onDelayMinMs,
+                                 const unsigned long  onDelayMaxMs,
+                                 const unsigned long  onTimeMinMs,
+                                 const unsigned long  onTimeMaxMs,
                                  LEDCyclicEffect * const onEffect,
                                  LEDOneShotEffect * const offToOnEffect,
                                  LEDOneShotEffect * const onToOffEffect):
   LEDStaticLighting(ledPin, brightness, CYCLE_OFF, onEffect, offToOnEffect, onToOffEffect),
-  _masterCycle(masterCycle)
+  _onDelayMinMs(onDelayMinMs),
+  _onDelayMaxMs(onDelayMaxMs),
+  _onTimeMinMs(onTimeMinMs),
+  _onTimeMaxMs(onTimeMaxMs),
+  _masterCycle(masterCycle),
+  _nextSwitchTimeMs(0),
+  _outputWasOn(false)
 {
 
 }
 
 void LEDChainedCycle::execute() {
-  _masterCycle->isOutputActive();
+  const unsigned long currentTimeMs = millis();
+
+  switch (_currentState) {
+    case CYCLE_OFF:
+      lightOff();
+      if (_masterCycle->isOutputActive()) {
+        if ( not _outputWasOn ) {
+          if (not _nextSwitchTimeMs) {
+            _nextSwitchTimeMs = currentTimeMs + random(_onDelayMinMs, _onDelayMaxMs);
+          }
+
+          if ( currentTimeMs > _nextSwitchTimeMs ) {
+            _nextSwitchTimeMs = 0;
+            resetTransitions();
+            _currentState = CYCLE_OFF_TO_ON;
+            _outputWasOn = true;
+          }
+        }
+      }
+      else {
+        _outputWasOn = false;
+      }
+      break;
+    case CYCLE_OFF_TO_ON:
+      if (not _masterCycle->isOutputActive()) {
+        resetTransitions();
+        _currentState = CYCLE_ON_TO_OFF;
+      }
+      else if (lightOffToOn()) {
+        _currentState = CYCLE_ON;
+      }
+      break;
+    case CYCLE_ON:
+      lightOn();
+      if (not _masterCycle->isOutputActive()) {
+        _nextSwitchTimeMs = 0;
+        resetTransitions();
+        _currentState = CYCLE_ON_TO_OFF;
+      } else {
+        if (not _nextSwitchTimeMs) {
+          _nextSwitchTimeMs = currentTimeMs + random(_onTimeMinMs, _onTimeMaxMs);
+        }
+
+        if ( currentTimeMs > _nextSwitchTimeMs ) {
+          _nextSwitchTimeMs = 0;
+          resetTransitions();
+          _currentState = CYCLE_ON_TO_OFF;
+        }
+      }
+      break;
+    case CYCLE_ON_TO_OFF:
+      if ( lightOnToOff() ) {
+        _currentState = CYCLE_OFF;
+      }
+      break;
+    default:
+      _currentState = CYCLE_OFF;
+  }
 }
 
 /*
