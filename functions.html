@@ -122,7 +122,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="class_fluorescent_start_effect.html#af01769c418107a658a402c246e0b53b2">FluorescentStartEffect</a>
 </li>
 <li>_nextSwitchTimeMs
-: <a class="el" href="class_l_e_d_triggered_cycle.html#ad899d183bfa01b81a1b4d4263eda52a0">LEDTriggeredCycle</a>
+: <a class="el" href="class_l_e_d_chained_cycle.html#ad899d183bfa01b81a1b4d4263eda52a0">LEDChainedCycle</a>
+, <a class="el" href="class_l_e_d_triggered_cycle.html#ad899d183bfa01b81a1b4d4263eda52a0">LEDTriggeredCycle</a>
 </li>
 <li>_offDelayMaxMs
 : <a class="el" href="class_l_e_d_triggered_cycle.html#abc3e2152faaceb77f914504a6ae8e88a">LEDTriggeredCycle</a>
@@ -140,19 +141,23 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="class_l_e_d_static_lighting.html#ab72d52e6b876d735f9bfb57a3ead6a0b">LEDStaticLighting</a>
 </li>
 <li>_onDelayMaxMs
-: <a class="el" href="class_l_e_d_triggered_cycle.html#a38528ee9584f794d100f412897978a15">LEDTriggeredCycle</a>
+: <a class="el" href="class_l_e_d_chained_cycle.html#a38528ee9584f794d100f412897978a15">LEDChainedCycle</a>
+, <a class="el" href="class_l_e_d_triggered_cycle.html#a38528ee9584f794d100f412897978a15">LEDTriggeredCycle</a>
 </li>
 <li>_onDelayMinMs
-: <a class="el" href="class_l_e_d_triggered_cycle.html#a9ccc3c87380776eaf832ff9030950c31">LEDTriggeredCycle</a>
+: <a class="el" href="class_l_e_d_chained_cycle.html#a9ccc3c87380776eaf832ff9030950c31">LEDChainedCycle</a>
+, <a class="el" href="class_l_e_d_triggered_cycle.html#a9ccc3c87380776eaf832ff9030950c31">LEDTriggeredCycle</a>
 </li>
 <li>_onEffect
 : <a class="el" href="class_l_e_d_static_lighting.html#a89c11d35c8da0073467290e523dfc5af">LEDStaticLighting</a>
 </li>
 <li>_onTimeMaxMs
-: <a class="el" href="class_l_e_d_random_lighting_cycle.html#a3f146ec5e5f2970d3af29ceece99ff28">LEDRandomLightingCycle</a>
+: <a class="el" href="class_l_e_d_chained_cycle.html#a3f146ec5e5f2970d3af29ceece99ff28">LEDChainedCycle</a>
+, <a class="el" href="class_l_e_d_random_lighting_cycle.html#a3f146ec5e5f2970d3af29ceece99ff28">LEDRandomLightingCycle</a>
 </li>
 <li>_onTimeMinMs
-: <a class="el" href="class_l_e_d_random_lighting_cycle.html#a84ad3b06d6e1583e3da924dc01005c92">LEDRandomLightingCycle</a>
+: <a class="el" href="class_l_e_d_chained_cycle.html#a84ad3b06d6e1583e3da924dc01005c92">LEDChainedCycle</a>
+, <a class="el" href="class_l_e_d_random_lighting_cycle.html#a84ad3b06d6e1583e3da924dc01005c92">LEDRandomLightingCycle</a>
 </li>
 <li>_onToOffEffect
 : <a class="el" href="class_l_e_d_static_lighting.html#a2383526dcb46d392cafe6edbdbc34b2e">LEDStaticLighting</a>
@@ -258,12 +263,15 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="class_l_e_d_one_shot_effect.html#a0ed1d3ade3d9520d003f8ba69e704580">LEDOneShotEffect</a>
 </li>
 <li>isOutputActive()
-: <a class="el" href="class_l_e_d_static_lighting.html#a8a395125a026c694cf01f7fb1e963aa2">LEDStaticLighting</a>
+: <a class="el" href="class_l_e_d_static_lighting.html#a40ef97ea4f5ed7ebeb150ef29d89f98a">LEDStaticLighting</a>
 </li>
 </ul>
 
 
 <h3><a id="index_l"></a>- l -</h3><ul>
+<li>LEDChainedCycle()
+: <a class="el" href="class_l_e_d_chained_cycle.html#a5318d37d31a0b43b23e1504cb56feea9">LEDChainedCycle</a>
+</li>
 <li>LEDLightingCycle()
 : <a class="el" href="class_l_e_d_lighting_cycle.html#aed5a538ee597d74ca39892af5c8892b7">LEDLightingCycle</a>
 </li>
@@ -283,13 +291,13 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="class_l_e_d_static_lighting.html#ac63baab438299bd5074897396b600c00">LEDStaticLighting</a>
 </li>
 <li>lightOffToOn()
-: <a class="el" href="class_l_e_d_static_lighting.html#a389f797f34a05af622ce3352045b1c84">LEDStaticLighting</a>
+: <a class="el" href="class_l_e_d_static_lighting.html#a7d18504cd0dfbfd019432e482c565179">LEDStaticLighting</a>
 </li>
 <li>lightOn()
 : <a class="el" href="class_l_e_d_static_lighting.html#a4dc2c28dc568051bd85575dfd2082c54">LEDStaticLighting</a>
 </li>
 <li>lightOnToOff()
-: <a class="el" href="class_l_e_d_static_lighting.html#a4fd04d9e1c9e53a2941793db971fc03d">LEDStaticLighting</a>
+: <a class="el" href="class_l_e_d_static_lighting.html#aed4357718591ca1dce7a613a11b2c33a">LEDStaticLighting</a>
 </li>
 </ul>
 
