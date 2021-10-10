@@ -89,6 +89,11 @@ $(document).ready(function(){initNavTree('class_l_e_d_chained_cycle.html',''); i
 <div class="title">LEDChainedCycle Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class can be used to tie room lighting to other rooms.  
+ <a href="class_l_e_d_chained_cycle.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_l_e_d_lighting_cycle_8h_source.html">LEDLightingCycle.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for LEDChainedCycle:</div>
 <div class="dyncontent">
@@ -101,9 +106,8 @@ Inheritance diagram for LEDChainedCycle:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5318d37d31a0b43b23e1504cb56feea9"><td class="memItemLeft" align="right" valign="top"><a id="a5318d37d31a0b43b23e1504cb56feea9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#a5318d37d31a0b43b23e1504cb56feea9">LEDChainedCycle</a> (const unsigned char ledPin, const unsigned char brightness, <a class="el" href="class_l_e_d_static_lighting.html">LEDStaticLighting</a> const *const masterCycle, const unsigned long onDelayMinMs, const unsigned long onDelayMaxMs, const unsigned long onTimeMinMs, const unsigned long onTimeMaxMs, <a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a> *const onEffect=new <a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a>(), <a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const offToOnEffect=0, <a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const onToOffEffect=0)</td></tr>
-<tr class="memdesc:a5318d37d31a0b43b23e1504cb56feea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum off (inactive) time in ms. <br /></td></tr>
+<tr class="memitem:a5318d37d31a0b43b23e1504cb56feea9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#a5318d37d31a0b43b23e1504cb56feea9">LEDChainedCycle</a> (const unsigned char ledPin, const unsigned char brightness, <a class="el" href="class_l_e_d_static_lighting.html">LEDStaticLighting</a> const *const masterCycle, const unsigned long onDelayMinMs, const unsigned long onDelayMaxMs, const unsigned long onTimeMinMs, const unsigned long onTimeMaxMs, <a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a> *const onEffect=new <a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a>(), <a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const offToOnEffect=0, <a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const onToOffEffect=0)</td></tr>
+<tr class="memdesc:a5318d37d31a0b43b23e1504cb56feea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum off (inactive) time in ms.  <a href="class_l_e_d_chained_cycle.html#a5318d37d31a0b43b23e1504cb56feea9">More...</a><br /></td></tr>
 <tr class="separator:a5318d37d31a0b43b23e1504cb56feea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61af3e60b94ae3e748f6fbac1e794af7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#a61af3e60b94ae3e748f6fbac1e794af7">execute</a> ()</td></tr>
 <tr class="memdesc:a61af3e60b94ae3e748f6fbac1e794af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method needs to be called in the loop() function of the sketch.  <a href="class_l_e_d_chained_cycle.html#a61af3e60b94ae3e748f6fbac1e794af7">More...</a><br /></td></tr>
@@ -119,10 +123,12 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ad605c82cd9f9d26ef64076f7e5df8301"><td class="memItemLeft" align="right" valign="top"><a id="ad605c82cd9f9d26ef64076f7e5df8301"></a>
-<a class="el" href="class_l_e_d_static_lighting.html">LEDStaticLighting</a> const  *const&#160;</td><td class="memItemRight" valign="bottom"><b>_masterCycle</b></td></tr>
+<a class="el" href="class_l_e_d_static_lighting.html">LEDStaticLighting</a> const  *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#ad605c82cd9f9d26ef64076f7e5df8301">_masterCycle</a></td></tr>
+<tr class="memdesc:ad605c82cd9f9d26ef64076f7e5df8301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master lighting cycle governing this lighting cycle. <br /></td></tr>
 <tr class="separator:ad605c82cd9f9d26ef64076f7e5df8301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a227e83389b032f5e68ecb3c58b0ae8a8"><td class="memItemLeft" align="right" valign="top"><a id="a227e83389b032f5e68ecb3c58b0ae8a8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>_outputWasOn</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#a227e83389b032f5e68ecb3c58b0ae8a8">_outputWasOn</a></td></tr>
+<tr class="memdesc:a227e83389b032f5e68ecb3c58b0ae8a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable to remember whether this cycle was already active for the current master cycle active state <br /></td></tr>
 <tr class="separator:a227e83389b032f5e68ecb3c58b0ae8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad899d183bfa01b81a1b4d4263eda52a0"><td class="memItemLeft" align="right" valign="top"><a id="ad899d183bfa01b81a1b4d4263eda52a0"></a>
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_e_d_chained_cycle.html#ad899d183bfa01b81a1b4d4263eda52a0">_nextSwitchTimeMs</a></td></tr>
@@ -199,6 +205,105 @@ unsigned char const&#160;</td><td class="memItemRight" valign="bottom"><a class=
 <tr class="memdesc:a89c11d35c8da0073467290e523dfc5af inherit pro_attribs_class_l_e_d_static_lighting"><td class="mdescLeft">&#160;</td><td class="mdescRight">Effect to be used when the output is active. <br /></td></tr>
 <tr class="separator:a89c11d35c8da0073467290e523dfc5af inherit pro_attribs_class_l_e_d_static_lighting"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This class can be used to tie room lighting to other rooms. </p>
+<p>This class monitors its master lighting cycle to determine whether it should be on or off. This is intended to for rooms that are only accessable from other rooms in the building where the light should also be turned on. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5318d37d31a0b43b23e1504cb56feea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5318d37d31a0b43b23e1504cb56feea9">&#9670;&nbsp;</a></span>LEDChainedCycle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_e_d_chained_cycle.html">LEDChainedCycle</a> </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned char&#160;</td>
+          <td class="paramname"><em>ledPin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned char&#160;</td>
+          <td class="paramname"><em>brightness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_l_e_d_static_lighting.html">LEDStaticLighting</a> const *const&#160;</td>
+          <td class="paramname"><em>masterCycle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned long&#160;</td>
+          <td class="paramname"><em>onDelayMinMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned long&#160;</td>
+          <td class="paramname"><em>onDelayMaxMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned long&#160;</td>
+          <td class="paramname"><em>onTimeMinMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned long&#160;</td>
+          <td class="paramname"><em>onTimeMaxMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a> *const&#160;</td>
+          <td class="paramname"><em>onEffect</em> = <code>new&#160;<a class="el" href="class_l_e_d_cyclic_effect.html">LEDCyclicEffect</a>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const&#160;</td>
+          <td class="paramname"><em>offToOnEffect</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_l_e_d_one_shot_effect.html">LEDOneShotEffect</a> *const&#160;</td>
+          <td class="paramname"><em>onToOffEffect</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Minimum off (inactive) time in ms. </p>
+<p>Creates a new <a class="el" href="class_l_e_d_chained_cycle.html" title="This class can be used to tie room lighting to other rooms.">LEDChainedCycle</a> instance</p>
+<p>The cycle behaviour can be tuned with the #onDelayMinMs and #onDelayMinMs parameters to delay the start of the active cycle.</p>
+<p>The parameters #onTimeMinMs and #onTimeMaxMs determine how long the light should stay active once activated. If the master cycle turns inactive this cycle will also go inactive regardless of these parameters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ledPin</td><td>number of the pin to be used. Arduino defines like LED_BUILTIN are allowed </td></tr>
+    <tr><td class="paramname">brightness</td><td>sets the PWM duty cycle from 0 (off) to 255 (full brightness) @masterCycle Master cycle to enable the active state of this cycle </td></tr>
+    <tr><td class="paramname">onDelayMinMs</td><td>minimum activation delay in ms </td></tr>
+    <tr><td class="paramname">onDelayMaxMs</td><td>maximum activation delay in ms </td></tr>
+    <tr><td class="paramname">onTimeMinMs</td><td>Minimum on (active) time in ms </td></tr>
+    <tr><td class="paramname">onTimeMaxMs</td><td>Maximum on (active) time in ms </td></tr>
+    <tr><td class="paramname">onEffect</td><td>sets the effect class to use when the output is active </td></tr>
+    <tr><td class="paramname">offToOnEffect</td><td>set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON </td></tr>
+    <tr><td class="paramname">onToOffEffect</td><td>set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a61af3e60b94ae3e748f6fbac1e794af7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61af3e60b94ae3e748f6fbac1e794af7">&#9670;&nbsp;</a></span>execute()</h2>

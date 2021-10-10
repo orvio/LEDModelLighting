@@ -4,7 +4,7 @@ var class_l_e_d_one_shot_effect =
     [ "getDurationMs", "class_l_e_d_one_shot_effect.html#a640ae23cdc9402574d22a8c3d8eb8652", null ],
     [ "getRemainingDuration", "class_l_e_d_one_shot_effect.html#af5d47f0260a67e7c1f532d518de189d5", null ],
     [ "getRemainingStartDelay", "class_l_e_d_one_shot_effect.html#ad4fcd6bb5244ab7e58c23c210b84c6ac", null ],
-    [ "isFinished", "class_l_e_d_one_shot_effect.html#a0ed1d3ade3d9520d003f8ba69e704580", null ],
+    [ "isFinished", "class_l_e_d_one_shot_effect.html#a06926ca87a7be7d8af8ee84670fffa87", null ],
     [ "reset", "class_l_e_d_one_shot_effect.html#ad20897c5c8bd47f5d4005989bead0e55", null ],
     [ "_durationMs", "class_l_e_d_one_shot_effect.html#a89d77f2746fb6f21033d08e46dc43183", null ],
     [ "_maxStartDelayMs", "class_l_e_d_one_shot_effect.html#aa2a957dd062a404bed98b3bee4f574ec", null ],

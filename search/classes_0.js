@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['beaconeffect_69',['BeaconEffect',['../class_beacon_effect.html',1,'']]]
+  ['beaconeffect_71',['BeaconEffect',['../class_beacon_effect.html',1,'']]]
 ];
