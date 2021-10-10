@@ -75,7 +75,7 @@ class LEDStaticLighting {
       @return true if the output is active
     */
     bool isOutputActive() const;
-    
+
   protected:
     ///current state of the output pin
     CycleStates _currentState;
@@ -181,12 +181,20 @@ class LEDTriggeredCycle : public LEDStaticLighting {
     virtual void execute();
 };
 
+/**
+  @brief This class can be used to tie room lighting to other rooms
+
+  This class monitors its master lighting cycle to determine whether it should be on or off.
+  This is intended to for rooms that are only accessable from other rooms in the building where
+  the light should also be turned on.
+*/
 class LEDChainedCycle : public LEDStaticLighting {
   private:
+    ///Master lighting cycle governing this lighting cycle
     LEDStaticLighting const * const _masterCycle;
-
+    ///variable to remember whether this cycle was already active for the current master cycle active state
     bool _outputWasOn;
-    
+
     ///time for the next switch in ms
     unsigned long _nextSwitchTimeMs;
     ///minimum activation delay in ms
@@ -200,6 +208,26 @@ class LEDChainedCycle : public LEDStaticLighting {
     ///Minimum off (inactive) time in ms
 
   public:
+    /**
+      @brief Creates a new LEDChainedCycle instance
+      
+      The cycle behaviour can be tuned with the #onDelayMinMs and #onDelayMinMs parameters to delay the start of
+      the active cycle.
+
+      The parameters #onTimeMinMs and #onTimeMaxMs determine how long the light should stay active once activated.
+      If the master cycle turns inactive this cycle will also go inactive regardless of these parameters.
+
+      @param ledPin number of the pin to be used. Arduino defines like LED_BUILTIN are allowed
+      @param brightness sets the PWM duty cycle from 0 (off) to 255 (full brightness)
+      @masterCycle Master cycle to enable the active state of this cycle
+      @param onDelayMinMs minimum activation delay in ms
+      @param onDelayMaxMs maximum activation delay in ms
+      @param onTimeMinMs Minimum on (active) time in ms
+      @param onTimeMaxMs Maximum on (active) time in ms
+      @param onEffect sets the effect class to use when the output is active
+      @param offToOnEffect set the effect class to use when the output state transitions from CYCLE_OFF to CYCLE_ON
+      @param onToOffEffect set the effect class to use when the output state transitions from CYCLE_ON to CYCLE_OFF
+    */
     LEDChainedCycle(const unsigned char ledPin, const unsigned char brightness, LEDStaticLighting const * const  masterCycle,
                     const unsigned long onDelayMinMs, const unsigned long onDelayMaxMs,
                     const unsigned long onTimeMinMs, const unsigned long onTimeMaxMs,
