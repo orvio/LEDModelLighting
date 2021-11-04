@@ -15,7 +15,7 @@
     along with LEDModelLighting.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "LEDLightingCycle.h"
-#include <arduino.h>
+#include <Arduino.h>
 
 /*
    LEDStaticLighting

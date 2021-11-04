@@ -15,7 +15,7 @@
     along with LEDModelLighting.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "LEDLightingEffect.h"
-#include <arduino.h>
+#include <Arduino.h>
 
 unsigned char LEDLightingEffect::getBrightness( unsigned char const maxBrightness) {
   return maxBrightness;
