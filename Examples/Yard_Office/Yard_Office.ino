@@ -1,6 +1,6 @@
 #include <LEDLightingCycle.h>
 
-//define PWP capable pins
+//define PWM capable pins
 #define PWM_PIN0 3
 #define PWM_PIN1 5
 #define PWM_PIN2 6
@@ -46,7 +46,7 @@ void setup() {
   //office lights
   ledSetups[3] = new LEDRandomLightingCycle(PWM_PIN3, 255, 5*60*1000ul, 10*60*1000ul, 5*60*1000ul, 10*60*1000ul, new LEDCyclicEffect(), new FluorescentStartEffect(500, 4000), new FadeEffect(50, FadeEffect::FADE_OUT));
   ledSetups[4] = new LEDRandomLightingCycle(PWM_PIN4, 255, 5*60*1000ul, 10*60*1000ul, 5*60*1000ul, 10*60*1000ul, new LEDCyclicEffect(), new FluorescentStartEffect(1000, 4000), new FadeEffect(50, FadeEffect::FADE_OUT));
-  ledSetups[5] = new LEDChainedCycle(PWM_PIN2, 255, ledSetups[4], 30*1000ul, 2*60*1000ul, 2*60*1000ul, 10*60*1000ul, new LEDCyclicEffect(), new FluorescentStartEffect(500, 2000), new FadeEffect(50, FadeEffect::FADE_OUT) );
+  ledSetups[5] = new LEDChainedCycle(PWM_PIN5, 255, ledSetups[4], 30*1000ul, 2*60*1000ul, 2*60*1000ul, 10*60*1000ul, new LEDCyclicEffect(), new FluorescentStartEffect(500, 2000), new FadeEffect(50, FadeEffect::FADE_OUT) );
 
   pinMode(V5_LOW_PIN, OUTPUT);
   pinMode(V5_OK_PIN, OUTPUT);
