@@ -1,0 +1,289 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Conn_01x15_Female J1
+U 1 1 61658A93
+P 5450 2350
+F 0 "J1" H 5478 2376 50  0000 L CNN
+F 1 "Conn_01x15_Female" H 5478 2285 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x15_P2.54mm_Vertical" H 5450 2350 50  0001 C CNN
+F 3 "~" H 5450 2350 50  0001 C CNN
+	1    5450 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x15_Female J2
+U 1 1 616598AF
+P 1700 2350
+F 0 "J2" H 1592 3235 50  0000 C CNN
+F 1 "Conn_01x15_Female" H 1592 3144 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x15_P2.54mm_Vertical" H 1700 2350 50  0001 C CNN
+F 3 "~" H 1700 2350 50  0001 C CNN
+	1    1700 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 6165C4FF
+P 5050 2750
+F 0 "#PWR0101" H 5050 2500 50  0001 C CNN
+F 1 "GND" V 5055 2622 50  0000 R CNN
+F 2 "" H 5050 2750 50  0001 C CNN
+F 3 "" H 5050 2750 50  0001 C CNN
+	1    5050 2750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5050 2750 5250 2750
+$Comp
+L power:GND #PWR0102
+U 1 1 6165E3AD
+P 2750 2950
+F 0 "#PWR0102" H 2750 2700 50  0001 C CNN
+F 1 "GND" H 2755 2777 50  0000 C CNN
+F 2 "" H 2750 2950 50  0001 C CNN
+F 3 "" H 2750 2950 50  0001 C CNN
+	1    2750 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 2950 2750 2950
+$Comp
+L power:+7.5V #PWR0103
+U 1 1 6165FB2D
+P 2250 3050
+F 0 "#PWR0103" H 2250 2900 50  0001 C CNN
+F 1 "+7.5V" H 2265 3223 50  0000 C CNN
+F 2 "" H 2250 3050 50  0001 C CNN
+F 3 "" H 2250 3050 50  0001 C CNN
+	1    2250 3050
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1900 3050 2250 3050
+Wire Wire Line
+	2600 3050 2600 4000
+$Comp
+L Connector:Screw_Terminal_01x04 J3
+U 1 1 616636CF
+P 3100 2450
+F 0 "J3" H 3180 2442 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 3180 2351 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 3100 2450 50  0001 C CNN
+F 3 "~" H 3100 2450 50  0001 C CNN
+	1    3100 2450
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x04 J4
+U 1 1 61663FC0
+P 3100 2050
+F 0 "J4" H 3180 2042 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 3180 1951 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 3100 2050 50  0001 C CNN
+F 3 "~" H 3100 2050 50  0001 C CNN
+	1    3100 2050
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x04 J5
+U 1 1 616648E0
+P 2700 4200
+F 0 "J5" V 2572 3912 50  0000 R CNN
+F 1 "Screw_Terminal_01x04" V 2663 3912 50  0000 R CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 2700 4200 50  0001 C CNN
+F 3 "~" H 2700 4200 50  0001 C CNN
+	1    2700 4200
+	0    -1   1    0   
+$EndComp
+$Comp
+L Transistor_Array:ULN2803A U1
+U 1 1 616665CA
+P 4200 2350
+F 0 "U1" H 4200 2825 50  0000 C CNN
+F 1 "ULN2803A" H 4200 2916 50  0000 C CNN
+F 2 "Package_DIP:DIP-18_W7.62mm" H 4250 1700 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 4300 2150 50  0001 C CNN
+	1    4200 2350
+	-1   0    0    1   
+$EndComp
+Text Label 2100 3050 0    50   ~ 0
+VIN
+Text Label 1900 2850 0    50   ~ 0
+RST
+$Comp
+L power:+5V #PWR0104
+U 1 1 61667C1A
+P 2200 2750
+F 0 "#PWR0104" H 2200 2600 50  0001 C CNN
+F 1 "+5V" V 2215 2878 50  0000 L CNN
+F 2 "" H 2200 2750 50  0001 C CNN
+F 3 "" H 2200 2750 50  0001 C CNN
+	1    2200 2750
+	0    1    1    0   
+$EndComp
+Text Label 5250 2850 2    50   ~ 0
+RST
+Text Label 5250 2950 2    50   ~ 0
+RX0
+Text Label 5250 3050 2    50   ~ 0
+TX0
+Text Label 5250 2650 2    50   ~ 0
+D2
+Text Label 5250 2550 2    50   ~ 0
+D3(PWM)
+Text Label 5250 2450 2    50   ~ 0
+D4
+Text Label 5250 2350 2    50   ~ 0
+D5(PWM)
+Text Label 5250 2250 2    50   ~ 0
+D6(PWM)
+Text Label 5250 2150 2    50   ~ 0
+D7
+Text Label 5250 2050 2    50   ~ 0
+D8
+Text Label 5250 1950 2    50   ~ 0
+D9(PWM)
+Text Label 5250 1850 2    50   ~ 0
+D10(PWM)
+Text Label 5250 1750 2    50   ~ 0
+D11
+Text Label 5250 1650 2    50   ~ 0
+D12
+$Comp
+L power:GND #PWR0105
+U 1 1 616739A4
+P 4200 1650
+F 0 "#PWR0105" H 4200 1400 50  0001 C CNN
+F 1 "GND" H 4205 1477 50  0000 C CNN
+F 2 "" H 4200 1650 50  0001 C CNN
+F 3 "" H 4200 1650 50  0001 C CNN
+	1    4200 1650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5250 1850 4600 1850
+Wire Wire Line
+	5250 2550 4600 2550
+Wire Wire Line
+	5250 1950 4600 1950
+Wire Wire Line
+	4600 2050 5250 2050
+Wire Wire Line
+	5250 2150 4600 2150
+Wire Wire Line
+	4600 2250 5250 2250
+Wire Wire Line
+	4600 2350 5250 2350
+Wire Wire Line
+	4600 2450 5250 2450
+$Comp
+L Device:CP C1
+U 1 1 616802A6
+P 3950 3550
+F 0 "C1" H 4068 3596 50  0000 L CNN
+F 1 "470uC" H 4068 3505 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm" H 3988 3400 50  0001 C CNN
+F 3 "~" H 3950 3550 50  0001 C CNN
+	1    3950 3550
+	1    0    0    -1  
+$EndComp
+Connection ~ 2250 3050
+Wire Wire Line
+	2250 3050 2600 3050
+Wire Wire Line
+	2600 4000 2700 4000
+Connection ~ 2600 4000
+Wire Wire Line
+	2700 4000 2800 4000
+Connection ~ 2700 4000
+Wire Wire Line
+	2900 4000 2900 2950
+Connection ~ 2750 2950
+Wire Wire Line
+	2750 2950 2900 2950
+Wire Wire Line
+	1900 2750 2200 2750
+$Comp
+L power:+7.5V #PWR0106
+U 1 1 616D0935
+P 3950 3400
+F 0 "#PWR0106" H 3950 3250 50  0001 C CNN
+F 1 "+7.5V" H 3965 3573 50  0000 C CNN
+F 2 "" H 3950 3400 50  0001 C CNN
+F 3 "" H 3950 3400 50  0001 C CNN
+	1    3950 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0107
+U 1 1 616D0F09
+P 3950 3700
+F 0 "#PWR0107" H 3950 3450 50  0001 C CNN
+F 1 "GND" H 3955 3527 50  0000 C CNN
+F 2 "" H 3950 3700 50  0001 C CNN
+F 3 "" H 3950 3700 50  0001 C CNN
+	1    3950 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 2550 3300 2550
+Wire Wire Line
+	3800 2450 3300 2450
+Wire Wire Line
+	3800 2350 3300 2350
+Wire Wire Line
+	3800 2250 3300 2250
+Wire Wire Line
+	3800 2150 3300 2150
+Wire Wire Line
+	3800 2050 3300 2050
+Wire Wire Line
+	3800 1950 3300 1950
+Wire Wire Line
+	3800 1850 3300 1850
+Text Label 3350 2550 0    50   ~ 0
+LED_OUT1
+Text Label 3350 2450 0    50   ~ 0
+LED_OUT2
+Text Label 3350 2350 0    50   ~ 0
+LED_OUT3
+Text Label 3350 2250 0    50   ~ 0
+LED_OUT4
+Text Label 3350 2150 0    50   ~ 0
+LED_OUT5
+Text Label 3350 2050 0    50   ~ 0
+LED_OUT6
+Text Label 3350 1950 0    50   ~ 0
+LED_OUT7
+Text Label 3350 1850 0    50   ~ 0
+LED_OUT8
+$Comp
+L power:+7.5V #PWR0108
+U 1 1 6167F389
+P 3650 2800
+F 0 "#PWR0108" H 3650 2650 50  0001 C CNN
+F 1 "+7.5V" H 3665 2973 50  0000 C CNN
+F 2 "" H 3650 2800 50  0001 C CNN
+F 3 "" H 3650 2800 50  0001 C CNN
+	1    3650 2800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3650 2800 3650 2650
+Wire Wire Line
+	3650 2650 3800 2650
+$EndSCHEMATC
