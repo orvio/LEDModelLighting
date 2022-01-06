@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+/Examples/Arduino_Micro_Simple/KiCad/Arduino Micro Lightboard.kicad_pcb-bak
+/Examples/Arduino_Micro_Simple/KiCad/Arduino Micro Lightboard.sch-bak
+/Examples/Arduino_Micro_Simple/KiCad/fp-info-cache
+/Examples/Arduino_Nano_Simple/KiCad/Arduino_Nano_Lightboard.kicad_pcb-bak
+/Examples/Arduino_Nano_Simple/KiCad/Arduino_Nano_Lightboard.sch-bak
+/Examples/Arduino_Nano_Simple/KiCad/fp-info-cache
